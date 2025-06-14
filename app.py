@@ -4,7 +4,6 @@ import os
 from datetime import datetime
 import folium
 from streamlit_folium import st_folium
-from folium.plugins import BeautifyIcon
 
 # Set full width layout
 st.set_page_config(layout="wide")
@@ -54,19 +53,14 @@ if brief:
                 # Choose icon color & emoji by type
                 incident_type = event['type'].lower()
                 if 'fire' in incident_type:
-                    icon_color = 'red'
                     icon_emoji = '🔥'
                 elif 'flood' in incident_type:
-                    icon_color = 'blue'
                     icon_emoji = '🌊'
                 elif 'storm' in incident_type or 'tornado' in incident_type:
-                    icon_color = 'orange'
                     icon_emoji = '🌪️'
                 elif 'outbreak' in incident_type or 'health' in incident_type:
-                    icon_color = 'green'
                     icon_emoji = '🦠'
                 else:
-                    icon_color = 'gray'
                     icon_emoji = '⚠️'
 
                 popup_text = f"""
@@ -82,14 +76,7 @@ if brief:
                     location=lat_lon,
                     popup=popup_text,
                     tooltip=tooltip_text,
-                    icon=BeautifyIcon(
-                        icon_shape='circle',
-                        text_color='white',
-                        background_color=icon_color,
-                        border_color='transparent',
-                        number=icon_emoji,
-                        inner_icon_style='font-size:16px;padding-top:2px;'
-                    )
+                    icon=folium.DivIcon(html=f"<div style='font-size: 24px;'>{icon_emoji}</div>")
                 ).add_to(m)
 
         if lat_lon_pairs:
