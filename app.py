@@ -34,32 +34,30 @@ if brief:
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
 
-    st.markdown("---")
+    # Top layout: map on right, summary on left
+    col1, col2 = st.columns([2, 3])
 
-    # Interactive Map Section
-    st.markdown("### 🗺️ Crisis Map Overview")
-    m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)  # Centered on the US
-
-    for event in brief.get('events', []):
-        if 'latitude' in event and 'longitude' in event:
-            popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
-            folium.Marker(
-                location=[event['latitude'], event['longitude']],
-                popup=popup_text,
-                tooltip=event['title']
-            ).add_to(m)
-
-    st_data = st_folium(m, width=700, height=450)
-
-    # Stats Panel
-    st.markdown("### Key Stats")
-    col1, col2 = st.columns(2)
-    with col1:
-        for stat in brief['stats'][:len(brief['stats'])//2]:
-            st.metric(label=stat['label'], value=stat['value'])
     with col2:
-        for stat in brief['stats'][len(brief['stats'])//2:]:
+        st.markdown("### 🗺️ Crisis Map Overview")
+        m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
+
+        for event in brief.get('events', []):
+            if 'latitude' in event and 'longitude' in event:
+                popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
+                folium.Marker(
+                    location=[event['latitude'], event['longitude']],
+                    popup=popup_text,
+                    tooltip=event['title']
+                ).add_to(m)
+
+        st_folium(m, width=500, height=350)
+
+    with col1:
+        st.markdown("### Key Stats")
+        for stat in brief['stats']:
             st.metric(label=stat['label'], value=stat['value'])
+
+    st.markdown("---")
 
     # Events
     st.markdown("### Top Incidents")
