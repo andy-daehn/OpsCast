@@ -41,6 +41,12 @@ if brief:
     left_col, right_col = st.columns([5, 7])
 
     with right_col:
+
+        st.markdown("\n")
+        st.markdown("### 📊 Key Stats")
+        for stat in brief['stats']:
+            st.metric(label=stat['label'], value=stat['value'])
+
         st.markdown("### 🗺️ Crisis Map Overview")
         m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
@@ -61,10 +67,6 @@ if brief:
 
         st_folium(m, width=750, height=450)
 
-        st.markdown("\n")
-        st.markdown("### 📊 Key Stats")
-        for stat in brief['stats']:
-            st.metric(label=stat['label'], value=stat['value'])
 
     with left_col:
         st.markdown("\n")
