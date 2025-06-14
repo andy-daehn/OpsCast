@@ -2,6 +2,8 @@ import streamlit as st
 import yaml
 import os
 from datetime import datetime
+import folium
+from streamlit_folium import st_folium
 
 # ---------- CONFIG ---------- #
 BRIEFS_DIR = "briefs"
@@ -34,9 +36,20 @@ if brief:
 
     st.markdown("---")
 
-    # Map Section
-    if 'map_image_url' in brief:
-        st.image(brief['map_image_url'], caption="Crisis Map Overview", use_column_width=True)
+    # Interactive Map Section
+    st.markdown("### 🗺️ Crisis Map Overview")
+    m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)  # Centered on the US
+
+    for event in brief.get('events', []):
+        if 'latitude' in event and 'longitude' in event:
+            popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
+            folium.Marker(
+                location=[event['latitude'], event['longitude']],
+                popup=popup_text,
+                tooltip=event['title']
+            ).add_to(m)
+
+    st_data = st_folium(m, width=700, height=450)
 
     # Stats Panel
     st.markdown("### Key Stats")

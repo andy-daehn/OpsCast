@@ -10,8 +10,6 @@ sources:
   - "ReliefWeb"
   - "FIRMS"
 
-map_image_url: "static/maps/2025-06-13.png"
-
 stats:
   - label: "New Alerts"
     value: "12"
@@ -30,18 +28,26 @@ events:
     type: "Wildfire"
     notes: "Over 5,000 acres burned overnight; evacuation orders active."
     link: "https://example.com/montana-fire"
+    latitude: 46.4089
+    longitude: -105.8406
+
   - title: "Kentucky Flash Flood Emergency"
     region: "Breathitt County, KY"
     type: "Flood"
     notes: "Multiple homes inaccessible, rural townships affected."
     link: "https://example.com/ky-flood"
+    latitude: 37.5415
+    longitude: -83.3003
+
   - title: "Tornado Watch: Tennessee Corridor"
-    region: "Nashville – Knoxville"
+    region: "Nashville – Knoxville, TN"
     type: "Storm"
     notes: "Conditions favorable for severe thunderstorms and rotation."
     link: "https://example.com/tornado-watch"
+    latitude: 35.9606
+    longitude: -83.9207
 
-podcast_link: "static/podcasts/2025-06-13.mp3"
+podcast_link: "https://example.com/audio/2025-06-13-brief.mp3"
 
 related_news:
   - title: "Red Cross Mobilizes in Kentucky Flood Response"

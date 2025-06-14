@@ -1,0 +1,45 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter/Streamlit history
+.ipynb_checkpoints/
+.history/
+
+# Environment
+.venv/
+env/
+venv/
+*.env
+.env.*
+
+# Mac / Windows / Linux system files
+.DS_Store
+Thumbs.db
+
+# VS Code / PyCharm
+.vscode/
+.idea/
+
+# Logs and compiled stuff
+*.log
+*.sqlite3
+*.db
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+
+# Data (optional — include this if you store large or sensitive data locally)
+data/
+secrets/
+
+# Streamlit specific (optional — ignore Streamlit’s local state)
+.streamlit/config.toml
+.streamlit/credentials.toml
+
+# Ignore any output from Streamlit-folium session state
+folium_map.html
