@@ -5,6 +5,9 @@ from datetime import datetime
 import folium
 from streamlit_folium import st_folium
 
+# Set full width layout
+st.set_page_config(layout="wide")
+
 # ---------- CONFIG ---------- #
 BRIEFS_DIR = "briefs"
 DEFAULT_BRIEF = "index.yaml"
@@ -34,8 +37,8 @@ if brief:
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
 
-    # Layout: left = summary and events, right = map + stats
-    left_col, right_col = st.columns([3, 5])
+    # Layout: left = incidents/audio/news, right = map + stats
+    left_col, right_col = st.columns([4, 8])
 
     with right_col:
         st.markdown("### 🗺️ Crisis Map Overview")
@@ -56,15 +59,16 @@ if brief:
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
 
-        st_folium(m, width=700, height=450)
+        st_folium(m, width=750, height=450)
 
-        st.markdown("### Key Stats")
+        st.markdown("\n")
+        st.markdown("### 📊 Key Stats")
         for stat in brief['stats']:
             st.metric(label=stat['label'], value=stat['value'])
 
     with left_col:
-        # Events
-        st.markdown("### Top Incidents")
+        st.markdown("\n")
+        st.markdown("### 🗂️ Top Incidents")
         for event in brief['events']:
             with st.container():
                 st.subheader(event['title'])
@@ -73,16 +77,16 @@ if brief:
                 if event.get('link'):
                     st.markdown(f"[More Info]({event['link']})")
 
-        # Podcast Embed
         if brief.get('podcast_link'):
+            st.markdown("\n")
             st.markdown("### 🎙️ Listen to Today's CrisisCast")
             st.audio(brief['podcast_link'])
 
-        # Related News
         if brief.get('related_news'):
+            st.markdown("\n")
             st.markdown("### 📰 Related News")
             for item in brief['related_news']:
                 st.markdown(f"- [{item['title']}]({item['url']})")
 
-    st.markdown("---")
+    st.markdown("\n---\n")
     st.markdown(f"*Built by CrisisCast Labs · Powered by Streamlit*")
