@@ -34,34 +34,31 @@ if brief:
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
 
-    # Top layout: map on right, summary + stats on left
-    left_col, right_col = st.columns([3, 5])
+    # Top layout: map on right, summary on left
+    st.markdown("### 🗺️ Crisis Map Overview")
+    m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
-    with right_col:
-        st.markdown("### 🗺️ Crisis Map Overview")
-        m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
+    lat_lon_pairs = []
+    for event in brief.get('events', []):
+        if 'latitude' in event and 'longitude' in event:
+            lat_lon = (event['latitude'], event['longitude'])
+            lat_lon_pairs.append(lat_lon)
+            popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
+            folium.Marker(
+                location=lat_lon,
+                popup=popup_text,
+                tooltip=event['title']
+            ).add_to(m)
 
-        lat_lon_pairs = []
-        for event in brief.get('events', []):
-            if 'latitude' in event and 'longitude' in event:
-                lat_lon = (event['latitude'], event['longitude'])
-                lat_lon_pairs.append(lat_lon)
-                popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
-                folium.Marker(
-                    location=lat_lon,
-                    popup=popup_text,
-                    tooltip=event['title']
-                ).add_to(m)
+    if lat_lon_pairs:
+        m.fit_bounds(lat_lon_pairs)
 
-        if lat_lon_pairs:
-            m.fit_bounds(lat_lon_pairs)
+    st_folium(m, width=700, height=450)
 
-        st_folium(m, width=700, height=450)
-
-    with left_col:
-        st.markdown("### Key Stats")
-        for stat in brief['stats']:
-            st.metric(label=stat['label'], value=stat['value'])
+    # Stats Panel under the map
+    st.markdown("### Key Stats")
+    for stat in brief['stats']:
+        st.metric(label=stat['label'], value=stat['value'])
 
     st.markdown("---")
 
