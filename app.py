@@ -38,7 +38,7 @@ if brief:
     st.write(brief['summary'])
 
     # Layout: left = incidents/audio/news, right = map + stats
-    left_col, right_col = st.columns([4, 8])
+    left_col, right_col = st.columns([5, 7])
 
     with right_col:
         st.markdown("### 🗺️ Crisis Map Overview")
