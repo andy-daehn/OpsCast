@@ -83,12 +83,12 @@ if brief:
                     popup=popup_text,
                     tooltip=tooltip_text,
                     icon=BeautifyIcon(
-                        icon_shape='marker',
+                        icon_shape='circle',
                         text_color='white',
                         background_color=icon_color,
-                        border_color='white',
+                        border_color='transparent',
                         number=icon_emoji,
-                        inner_icon_style='font-size:18px;padding-top:6px;'
+                        inner_icon_style='font-size:16px;padding-top:2px;'
                     )
                 ).add_to(m)
 
