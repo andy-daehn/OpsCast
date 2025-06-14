@@ -34,54 +34,55 @@ if brief:
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
 
-    # Top layout: map on right, summary on left
-    st.markdown("### 🗺️ Crisis Map Overview")
-    m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
+    # Layout: left = summary and events, right = map + stats
+    left_col, right_col = st.columns([3, 5])
 
-    lat_lon_pairs = []
-    for event in brief.get('events', []):
-        if 'latitude' in event and 'longitude' in event:
-            lat_lon = (event['latitude'], event['longitude'])
-            lat_lon_pairs.append(lat_lon)
-            popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
-            folium.Marker(
-                location=lat_lon,
-                popup=popup_text,
-                tooltip=event['title']
-            ).add_to(m)
+    with right_col:
+        st.markdown("### 🗺️ Crisis Map Overview")
+        m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
-    if lat_lon_pairs:
-        m.fit_bounds(lat_lon_pairs)
+        lat_lon_pairs = []
+        for event in brief.get('events', []):
+            if 'latitude' in event and 'longitude' in event:
+                lat_lon = (event['latitude'], event['longitude'])
+                lat_lon_pairs.append(lat_lon)
+                popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
+                folium.Marker(
+                    location=lat_lon,
+                    popup=popup_text,
+                    tooltip=event['title']
+                ).add_to(m)
 
-    st_folium(m, width=700, height=450)
+        if lat_lon_pairs:
+            m.fit_bounds(lat_lon_pairs)
 
-    # Stats Panel under the map
-    st.markdown("### Key Stats")
-    for stat in brief['stats']:
-        st.metric(label=stat['label'], value=stat['value'])
+        st_folium(m, width=700, height=450)
 
-    st.markdown("---")
+        st.markdown("### Key Stats")
+        for stat in brief['stats']:
+            st.metric(label=stat['label'], value=stat['value'])
 
-    # Events
-    st.markdown("### Top Incidents")
-    for event in brief['events']:
-        with st.container():
-            st.subheader(event['title'])
-            st.write(f"**Location:** {event['region']}  |  **Type:** {event['type']}")
-            st.write(event['notes'])
-            if event.get('link'):
-                st.markdown(f"[More Info]({event['link']})")
+    with left_col:
+        # Events
+        st.markdown("### Top Incidents")
+        for event in brief['events']:
+            with st.container():
+                st.subheader(event['title'])
+                st.write(f"**Location:** {event['region']}  |  **Type:** {event['type']}")
+                st.write(event['notes'])
+                if event.get('link'):
+                    st.markdown(f"[More Info]({event['link']})")
 
-    # Podcast Embed
-    if brief.get('podcast_link'):
-        st.markdown("### 🎙️ Listen to Today's CrisisCast")
-        st.audio(brief['podcast_link'])
+        # Podcast Embed
+        if brief.get('podcast_link'):
+            st.markdown("### 🎙️ Listen to Today's CrisisCast")
+            st.audio(brief['podcast_link'])
 
-    # Related News
-    if brief.get('related_news'):
-        st.markdown("### 📰 Related News")
-        for item in brief['related_news']:
-            st.markdown(f"- [{item['title']}]({item['url']})")
+        # Related News
+        if brief.get('related_news'):
+            st.markdown("### 📰 Related News")
+            for item in brief['related_news']:
+                st.markdown(f"- [{item['title']}]({item['url']})")
 
     st.markdown("---")
     st.markdown(f"*Built by CrisisCast Labs · Powered by Streamlit*")
