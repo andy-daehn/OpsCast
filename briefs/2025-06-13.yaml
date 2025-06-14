@@ -1,0 +1,50 @@
+date: "2025-06-13"
+updated: "2025-06-13T14:00:00Z"
+headline: "Multiple Crisis Zones Escalate Across the U.S. Heartland"
+summary: >
+  Overlapping disasters are affecting several U.S. states, with wildfires in Montana, flash flooding in Kentucky, and severe storm threats along the Tennessee Valley.
+
+sources:
+  - "NWS"
+  - "GDACS"
+  - "ReliefWeb"
+  - "FIRMS"
+
+map_image_url: "static/maps/2025-06-13.png"
+
+stats:
+  - label: "New Alerts"
+    value: "12"
+  - label: "States Affected"
+    value: "6"
+  - label: "Infrastructure Risk"
+    value: "3 incidents"
+  - label: "Active Response Orgs"
+    value: "5"
+  - label: "Media Spike"
+    value: "+32%"
+
+events:
+  - title: "Montana Wildfire Grows Rapidly"
+    region: "Miles City, MT"
+    type: "Wildfire"
+    notes: "Over 5,000 acres burned overnight; evacuation orders active."
+    link: "https://example.com/montana-fire"
+  - title: "Kentucky Flash Flood Emergency"
+    region: "Breathitt County, KY"
+    type: "Flood"
+    notes: "Multiple homes inaccessible, rural townships affected."
+    link: "https://example.com/ky-flood"
+  - title: "Tornado Watch: Tennessee Corridor"
+    region: "Nashville – Knoxville"
+    type: "Storm"
+    notes: "Conditions favorable for severe thunderstorms and rotation."
+    link: "https://example.com/tornado-watch"
+
+podcast_link: "static/podcasts/2025-06-13.mp3"
+
+related_news:
+  - title: "Red Cross Mobilizes in Kentucky Flood Response"
+    url: "https://reliefweb.int/rc-ky-floods"
+  - title: "Satellite Shows Montana Fireline Expansion"
+    url: "https://firms.nasa.gov/data/montana-wildfire"
