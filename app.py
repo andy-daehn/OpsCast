@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import folium
 from streamlit_folium import st_folium
+from folium.plugins import BeautifyIcon
 
 # Set full width layout
 st.set_page_config(layout="wide")
@@ -38,15 +39,9 @@ if brief:
     st.write(brief['summary'])
 
     # Layout: left = incidents/audio/news, right = map + stats
-    left_col, right_col = st.columns([5, 7])
+    left_col, right_col = st.columns([4, 8])
 
     with right_col:
-
-        st.markdown("\n")
-        st.markdown("### 📊 Key Stats")
-        for stat in brief['stats']:
-            st.metric(label=stat['label'], value=stat['value'])
-
         st.markdown("### 🗺️ Crisis Map Overview")
         m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
@@ -55,18 +50,73 @@ if brief:
             if 'latitude' in event and 'longitude' in event:
                 lat_lon = (event['latitude'], event['longitude'])
                 lat_lon_pairs.append(lat_lon)
-                popup_text = f"<strong>{event['title']}</strong><br>{event['region']}<br>{event['type']}<br>{event['notes']}"
+
+                # Choose icon color & emoji by type
+                incident_type = event['type'].lower()
+                if 'fire' in incident_type:
+                    icon_color = 'red'
+                    icon_emoji = '🔥'
+                elif 'flood' in incident_type:
+                    icon_color = 'blue'
+                    icon_emoji = '🌊'
+                elif 'storm' in incident_type or 'tornado' in incident_type:
+                    icon_color = 'orange'
+                    icon_emoji = '🌪️'
+                elif 'outbreak' in incident_type or 'health' in incident_type:
+                    icon_color = 'green'
+                    icon_emoji = '🦠'
+                else:
+                    icon_color = 'gray'
+                    icon_emoji = '⚠️'
+
+                popup_text = f"""
+                <strong>{event['title']}</strong><br>
+                {event['region']}<br>
+                {event['type']}<br>
+                {event['notes']}
+                """.strip()
+
+                tooltip_text = f"{event['title']} ({event['region']})"
+
                 folium.Marker(
                     location=lat_lon,
                     popup=popup_text,
-                    tooltip=event['title']
+                    tooltip=tooltip_text,
+                    icon=BeautifyIcon(
+                        icon_shape='marker',
+                        text_color='white',
+                        background_color=icon_color,
+                        border_color='white',
+                        number=icon_emoji,
+                        inner_icon_style='font-size:18px;padding-top:6px;'
+                    )
                 ).add_to(m)
 
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
 
+        # Add legend
+        legend_html = '''
+        <div style="position: fixed; 
+                    bottom: 50px; left: 50px; width: 200px; height: 140px; 
+                    background-color: white; z-index:9999; font-size:14px;
+                    border:2px solid grey; padding: 10px;">
+            <b>Legend</b><br>
+            🔥 Wildfire<br>
+            🌊 Flood<br>
+            🌪️ Storm/Tornado<br>
+            🦠 Health/Outbreak<br>
+            ⚠️ Other
+        </div>
+        '''
+        m.get_root().html.add_child(folium.Element(legend_html))
+
         st_folium(m, width=750, height=450)
 
+        st.markdown("\n")
+        st.markdown("### 📊 Key Stats")
+        for stat in brief['stats']:
+            st.metric(label=stat['label'], value=stat['value'])
 
     with left_col:
         st.markdown("\n")
