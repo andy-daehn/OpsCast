@@ -5,8 +5,8 @@ from datetime import datetime
 import folium
 from streamlit_folium import st_folium
 
-# Set full width layout
-st.set_page_config(layout="wide")
+# Set full width layout and dark theme
+st.set_page_config(layout="wide", page_title="CrisisCast Brief", page_icon="🌍")
 
 # ---------- CONFIG ---------- #
 BRIEFS_DIR = "briefs"
@@ -31,6 +31,18 @@ brief = load_brief(selected_date)
 
 # ---------- PAGE ---------- #
 if brief:
+    st.markdown("""
+        <style>
+            body, .stApp {
+                background-color: #111;
+                color: #f0f0f0;
+            }
+            .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+                color: #ffffff;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
     st.title(f"CrisisCast Brief – {brief['date']}")
     st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources'])}")
 
@@ -50,7 +62,6 @@ if brief:
                 lat_lon = (event['latitude'], event['longitude'])
                 lat_lon_pairs.append(lat_lon)
 
-                # Choose icon color & emoji by type
                 incident_type = event['type'].lower()
                 if 'fire' in incident_type:
                     icon_emoji = '🔥'
@@ -76,18 +87,19 @@ if brief:
                     location=lat_lon,
                     popup=popup_text,
                     tooltip=tooltip_text,
-                    icon=folium.DivIcon(html=f"<div style='font-size: 24px;'>{icon_emoji}</div>")
+                    icon=folium.DivIcon(html=f"<div style='font-size: 20px;'>{icon_emoji}</div>")
                 ).add_to(m)
 
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
 
-        # Add legend
+        # Smaller, dark-mode friendly legend
         legend_html = '''
         <div style="position: fixed; 
-                    bottom: 50px; left: 50px; width: 200px; height: 140px; 
-                    background-color: white; z-index:9999; font-size:14px;
-                    border:2px solid grey; padding: 10px;">
+                    bottom: 50px; left: 50px; width: 160px; height: auto; 
+                    background-color: #222; color: white;
+                    z-index:9999; font-size:12px;
+                    border:1px solid #555; padding: 8px; border-radius: 5px;">
             <b>Legend</b><br>
             🔥 Wildfire<br>
             🌊 Flood<br>
