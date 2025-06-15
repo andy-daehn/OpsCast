@@ -40,6 +40,11 @@ if brief:
             .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
                 color: #ffffff;
             }
+            .right-align {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 10px;
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -115,7 +120,9 @@ if brief:
         st.markdown("\n")
         st.markdown("### 📊 Key Stats")
         for stat in brief['stats']:
+            st.markdown(f"<div class='right-align'>", unsafe_allow_html=True)
             st.metric(label=stat['label'], value=stat['value'])
+            st.markdown("</div>", unsafe_allow_html=True)
 
     with left_col:
         st.markdown("\n")
