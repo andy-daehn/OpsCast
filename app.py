@@ -22,10 +22,41 @@ def load_brief(date_str):
         return yaml.safe_load(f)
 
 # ---------- SIDEBAR ---------- #
+# Get all .yaml files from the briefs directory
 brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
 date_options = [f.replace(".yaml", "") for f in brief_files]
-default_date = date_options[-1] if DEFAULT_BRIEF not in brief_files else DEFAULT_BRIEF.replace(".yaml", "")
 
+# Get today's date
+today_str = datetime.today().strftime("%Y-%m-%d")
+
+# Auto-create today's stub brief if not present
+today_file_path = os.path.join(BRIEFS_DIR, f"{today_str}.yaml")
+if not os.path.exists(today_file_path):
+    with open(today_file_path, 'w') as f:
+        f.write(yaml.dump({
+            'date': today_str,
+            'updated': datetime.now().strftime("%Y-%m-%d %H:%M"),
+            'headline': '🆕 New Brief - Add Content',
+            'summary': '',
+            'sources': [],
+            'events': [],
+            'related_news': [],
+            'stats': []
+        }))
+
+# Re-read files after stub creation
+brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
+date_options = [f.replace(".yaml", "") for f in brief_files]
+
+# Determine default date
+if DEFAULT_BRIEF in brief_files:
+    default_date = DEFAULT_BRIEF.replace(".yaml", "")
+elif today_str in date_options:
+    default_date = today_str
+else:
+    default_date = max(date_options)
+
+# Sidebar selection
 selected_date = st.sidebar.selectbox("Select Briefing Date", options=date_options, index=date_options.index(default_date))
 brief = load_brief(selected_date)
 
@@ -49,7 +80,7 @@ if brief:
     """, unsafe_allow_html=True)
 
     st.title(f"OpsCast Brief – {brief['date']}")
-    st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources'])}")
+    st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources']) if brief['sources'] else 'None listed'}")
 
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
@@ -58,7 +89,6 @@ if brief:
     left_col, right_col = st.columns([7, 5])
 
     with right_col:
-
         if brief.get('related_news'):
             st.markdown("\n")
             st.markdown("### 📰 Related News")
@@ -105,11 +135,10 @@ if brief:
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
 
-        # Smaller, dark-mode friendly legend
+        # Updated legend to align with the map
         legend_html = '''
         <div style="position: absolute; 
-                    bottom: 10px; left: 10px; 
-                    width: 160px; height: auto; 
+                    bottom: 10px; left: 10px; width: 160px; height: auto; 
                     background-color: #222; color: white;
                     z-index:9999; font-size:12px;
                     border:1px solid #555; padding: 8px; border-radius: 5px;">
@@ -123,9 +152,7 @@ if brief:
         '''
         m.get_root().html.add_child(folium.Element(legend_html))
 
-        st_folium(m, width=1000, height=450)
-
-
+        st_folium(m, use_container_width=True, height=500)
 
     with left_col:
         st.markdown("\n")
@@ -143,14 +170,12 @@ if brief:
             st.markdown("### 🎙️ Listen to Today's CrisisCast")
             st.audio(brief['podcast_link'])
 
-
         st.markdown("\n")
         st.markdown("### 📊 Key Stats")
         for stat in brief['stats']:
             st.markdown(f"<div class='right-align'>", unsafe_allow_html=True)
             st.metric(label=stat['label'], value=stat['value'])
             st.markdown("</div>", unsafe_allow_html=True)
-
 
     st.markdown("\n---\n")
     st.markdown(f"*Built by Crisis Forge Labs*")
