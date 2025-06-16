@@ -123,7 +123,7 @@ if brief:
         '''
         m.get_root().html.add_child(folium.Element(legend_html))
 
-        st_folium(m, use_container_width=True, height=500)
+        st_folium(m, width=1000, height=450)
 
 
 
