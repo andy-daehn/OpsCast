@@ -10,7 +10,7 @@ st.set_page_config(layout="wide", page_title="OpsCast Brief", page_icon="🌍")
 
 # ---------- CONFIG ---------- #
 BRIEFS_DIR = "briefs"
-DEFAULT_BRIEF = "index.yaml"
+DEFAULT_BRIEF = None  # Disable index.yaml default fallback
 
 # ---------- LOAD BRIEF ---------- #
 def load_brief(date_str):
@@ -49,7 +49,7 @@ brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
 date_options = [f.replace(".yaml", "") for f in brief_files]
 
 # Determine default date
-if DEFAULT_BRIEF in brief_files:
+if DEFAULT_BRIEF and DEFAULT_BRIEF in brief_files:
     default_date = DEFAULT_BRIEF.replace(".yaml", "")
 elif today_str in date_options:
     default_date = today_str
