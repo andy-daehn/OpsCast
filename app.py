@@ -5,7 +5,7 @@ from datetime import datetime
 import folium
 from streamlit_folium import st_folium
 
-# Set full width layout and dark theme
+# Set full width layout and dark theme and be cool
 st.set_page_config(layout="wide", page_title="OpsCast Brief", page_icon="🌍")
 
 # ---------- CONFIG ---------- #
