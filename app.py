@@ -107,8 +107,9 @@ if brief:
 
         # Smaller, dark-mode friendly legend
         legend_html = '''
-        <div style="position: fixed; 
-                    bottom: 50px; left: 50px; width: 160px; height: auto; 
+        <div style="position: absolute; 
+                    bottom: 10px; left: 10px; 
+                    width: 160px; height: auto; 
                     background-color: #222; color: white;
                     z-index:9999; font-size:12px;
                     border:1px solid #555; padding: 8px; border-radius: 5px;">
@@ -122,7 +123,7 @@ if brief:
         '''
         m.get_root().html.add_child(folium.Element(legend_html))
 
-        st_folium(m, width=750, height=450)
+        st_folium(m, use_container_width=True, height=500)
 
 
 
