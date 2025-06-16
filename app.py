@@ -29,20 +29,6 @@ date_options = [f.replace(".yaml", "") for f in brief_files]
 # Get today's date
 today_str = datetime.today().strftime("%Y-%m-%d")
 
-# Auto-create today's stub brief if not present
-today_file_path = os.path.join(BRIEFS_DIR, f"{today_str}.yaml")
-if not os.path.exists(today_file_path):
-    with open(today_file_path, 'w') as f:
-        f.write(yaml.dump({
-            'date': today_str,
-            'updated': datetime.now().strftime("%Y-%m-%d %H:%M"),
-            'headline': '🆕 New Brief - Add Content',
-            'summary': '',
-            'sources': [],
-            'events': [],
-            'related_news': [],
-            'stats': []
-        }))
 
 # Re-read files after stub creation
 brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
@@ -165,10 +151,10 @@ if brief:
                 if event.get('link'):
                     st.markdown(f"[More Info]({event['link']})")
 
-        if brief.get('podcast_link'):
-            st.markdown("\n")
-            st.markdown("### 🎙️ Listen to Today's CrisisCast")
-            st.audio(brief['podcast_link'])
+        # if brief.get('podcast_link'):
+        #     st.markdown("\n")
+        #     st.markdown("### 🎙️ Listen to Today's CrisisCast")
+        #     st.audio(brief['podcast_link'])
 
         st.markdown("\n")
         st.markdown("### 📊 Key Stats")
