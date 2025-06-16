@@ -6,7 +6,7 @@ import folium
 from streamlit_folium import st_folium
 
 # Set full width layout and dark theme
-st.set_page_config(layout="wide", page_title="CrisisCast Brief", page_icon="🌍")
+st.set_page_config(layout="wide", page_title="OpsCast Brief", page_icon="🌍")
 
 # ---------- CONFIG ---------- #
 BRIEFS_DIR = "briefs"
@@ -48,7 +48,7 @@ if brief:
         </style>
     """, unsafe_allow_html=True)
 
-    st.title(f"CrisisCast Brief – {brief['date']}")
+    st.title(f"OpsCast Brief – {brief['date']}")
     st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources'])}")
 
     st.markdown(f"### {brief['headline']}")
@@ -58,6 +58,13 @@ if brief:
     left_col, right_col = st.columns([4, 8])
 
     with right_col:
+
+        if brief.get('related_news'):
+            st.markdown("\n")
+            st.markdown("### 📰 Related News")
+            for item in brief['related_news']:
+                st.markdown(f"- [{item['title']}]({item['url']})")
+
         st.markdown("### 🗺️ Crisis Map Overview")
         m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
@@ -117,12 +124,7 @@ if brief:
 
         st_folium(m, width=750, height=450)
 
-        st.markdown("\n")
-        st.markdown("### 📊 Key Stats")
-        for stat in brief['stats']:
-            st.markdown(f"<div class='right-align'>", unsafe_allow_html=True)
-            st.metric(label=stat['label'], value=stat['value'])
-            st.markdown("</div>", unsafe_allow_html=True)
+
 
     with left_col:
         st.markdown("\n")
@@ -140,11 +142,14 @@ if brief:
             st.markdown("### 🎙️ Listen to Today's CrisisCast")
             st.audio(brief['podcast_link'])
 
-        if brief.get('related_news'):
-            st.markdown("\n")
-            st.markdown("### 📰 Related News")
-            for item in brief['related_news']:
-                st.markdown(f"- [{item['title']}]({item['url']})")
+
+        st.markdown("\n")
+        st.markdown("### 📊 Key Stats")
+        for stat in brief['stats']:
+            st.markdown(f"<div class='right-align'>", unsafe_allow_html=True)
+            st.metric(label=stat['label'], value=stat['value'])
+            st.markdown("</div>", unsafe_allow_html=True)
+
 
     st.markdown("\n---\n")
-    st.markdown(f"*Built by CrisisCast Labs · Powered by Streamlit*")
+    st.markdown(f"*Built by Crisis Forge Labs*")
