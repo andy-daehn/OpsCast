@@ -149,6 +149,14 @@ if brief:
 
         st_folium(m, use_container_width=True, height=500)
 
+        st.markdown(
+            """
+            <div style="margin-top: 10px;"></div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
         with right_col:
             if brief.get('collabops'):
                 st.markdown("\n")
