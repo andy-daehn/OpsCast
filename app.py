@@ -81,6 +81,7 @@ if brief:
 
 
 
+
     left_col, right_col = st.columns([7, 5])
 
     with right_col:
