@@ -11,16 +11,16 @@ sources:
   - "FIRMS"
 
 stats:
-  - label: "New Alerts"
-    value: "12"
-  - label: "States Affected"
-    value: "6"
-  - label: "Infrastructure Risk"
-    value: "3 incidents"
-  - label: "Active Response Orgs"
-    value: "5"
-  - label: "Media Spike"
-    value: "+32%"
+  - label: "US Wildfires in 2024"
+    value: "64,897"
+  - label: "Human Causation"
+    value: "90%"
+  - label: "Most Common Natural Disaster"
+    value: "Flooding"
+  - label: "US Taxpayer Cost Since 2000"
+    value: "$850 Billion"
+  - label: "Average Number of Tornadoes Annually"
+    value: "1,000"
 
 events:
   - title: "Montana Wildfire Grows Rapidly"
