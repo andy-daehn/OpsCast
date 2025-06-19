@@ -59,6 +59,18 @@ if brief:
     st.title(f"OpsCast Brief – {brief['date']}")
     st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources']) if brief['sources'] else 'None listed'}")
 
+    st.markdown(
+    f"""
+    <div style="background-color: #1e1e1e; padding: 16px 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h2 style="color: #f2f2f2; margin-top: 0; margin-bottom: 10px;">🚨 {brief['headline']}</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #ccc; margin: 0;">
+            {brief['summary']}
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True)
+
+
 
     left_col, right_col = st.columns([7, 5])
 
@@ -128,9 +140,6 @@ if brief:
         st_folium(m, use_container_width=True, height=500)
 
     with left_col:
-
-        st.markdown(f"### {brief['headline']}")
-        st.write(brief['summary'])
 
         st.markdown("\n")
         st.markdown("### 🗂️ Top Incidents")
