@@ -160,9 +160,11 @@ if brief:
         with right_col:
             if brief.get('collabops'):
                 st.markdown("\n")
-                st.markdown("### 🔭 Collab Ops")
+                st.markdown("### 🔭 Collaboration Operations")
                 for item in brief['collabops']:
+                    st.write(['notes'])
                     st.markdown(f"- [{item['title']}]({item['url']})")
+
 
 
     with left_col:
