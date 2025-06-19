@@ -1,0 +1,60 @@
+date: "2025-06-19"
+headline: "Major Hurricane Strikes Mexico Coast as Oregon Wildfires See Containment Progress"
+summary: >
+  Hurricane Erick made a historic Category 3 landfall in southern Mexico with 125 mph winds, marking it as the first Eastern Pacific major hurricane on record to make landfall in Mexico prior to August. After rapidly intensifying to Category 4 before landfall, Erick is now moving inland and is expected to dissipate by late tonight or early Friday, though it will continue to impact southern Mexico throughout the day. The hurricane is bringing life-threatening rainfall flooding, with 8 to 12 inches (and locally up to 16 inches) possible in Oaxaca and Guerrero states, posing a threat for flash flooding and mudslides, and gusty winds are also expected. Concurrently, firefighters have made significant progress in containing wildfires in Oregon. The Alder Springs Fire, burning west of Crooked River Ranch, is now 21% contained across 3,278 acres, leading to the dropping of all Level 3—Go Now evacuation orders and allowing residents to return home, with no structures reported burned. Separately, the Upper Applegate Fire is burning at 470 acres and is 70 percent lined.
+
+
+sources:
+  - "NWS"
+  - "Tropical Tidbits"
+  - "Watch Duty"
+  
+
+stats:
+  - label: "New Alerts"
+    value: "12"
+  - label: "States Affected"
+    value: "6"
+  - label: "Infrastructure Risk"
+    value: "3 incidents"
+  - label: "Active Response Orgs"
+    value: "5"
+  - label: "Media Spike"
+    value: "+32%"
+
+events:
+  - title: "Hurricane Erich Makes Landfall"
+    region: "Oaxacan, Mexico"
+    type: ""
+    notes: "Hurricane Erich had downgraded from a Category 4 to a Category 3 before making landfall at 530am MDT east of Punta Maldonado Mexico."
+    link: "https://www.tropicaltidbits.com/storminfo/#02E"
+    latitude: 16.4089
+    longitude: -98.4
+
+  - title: "Progress Made On Alder Springs Fire"
+    region: "Jefferson County, OR"
+    type: "Wildfire"
+    notes: "Progress is being made on the Alder Springs Fire in Jefferson County, OR with 3,441.8 acres at 21% containment. Level 3 evacuation orders have been lifted."
+    link: "https://app.watchduty.org/i/51741"
+    latitude: 44.7
+    longitude: -121.2
+
+  - title: "Upper Applegate Fire
+    region: "Jackson County, OR"
+    type: "Wildfire"
+    notes: "The Upper Applegate Fire is currently burning at 470 acres with 30% containment"
+    link: "https://app.watchduty.org/i/52004"
+    latitude: 42.4
+    longitude: -122.7
+
+podcast_link: "https://example.com/audio/2025-06-13-brief.mp3"
+
+related_news:
+  - title: "Hurricane Erick Moving Inland After Category 3 Mexico Landfall With Life-Threatening Flooding, High Winds"
+    url: "https://weather.com/storms/hurricane/news/2025-06-19-hurricane-erick-landfall-mexico-cat4"
+  - title: "Evacuation levels drop as firefighters make progress on Alder Springs Fire"
+    url: "https://bendbulletin.com/2025/06/19/evacuation-levels-drop-as-firefighters-make-progress-on-alder-springs-fire/"
+  - title: "Upper Applegate Fire burning at 470 acres"
+    url: "https://www.kdrv.com/video/upper-applegate-fire-burning-at-470-acres/video_91874375-fb83-5e7f-89af-fed8b7cc5323.html"
+
+
