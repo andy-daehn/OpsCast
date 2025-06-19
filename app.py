@@ -4,8 +4,6 @@ import os
 from datetime import datetime
 import folium
 from streamlit_folium import st_folium
-from branca.element import MacroElement
-from jinja2 import Template
 
 # Set full width layout and dark theme
 st.set_page_config(layout="wide", page_title="OpsCast Brief", page_icon="🌍")
@@ -74,9 +72,25 @@ if brief:
                 st.markdown(f"- [{item['title']}]({item['url']})")
 
         st.markdown("### 🗺️ Crisis Map Overview")
-        m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
 
+        # 🧭 Inline map legend
+        st.markdown(
+            """
+            <div style="background-color: #222; color: white; padding: 10px; border-radius: 8px; width: 200px; font-size: 14px; margin-bottom: 10px;">
+                <b>Legend</b><br>
+                🔥 Wildfire<br>
+                🌊 Flood<br>
+                🌪️ Storm/Tornado<br>
+                🦠 Health/Outbreak<br>
+                ⚠️ Other
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        m = folium.Map(location=[39.8283, -98.5795], zoom_start=4)
         lat_lon_pairs = []
+
         for event in brief.get('events', []):
             if 'latitude' in event and 'longitude' in event:
                 lat_lon = (event['latitude'], event['longitude'])
@@ -112,36 +126,6 @@ if brief:
 
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
-
-        # Add custom fixed-position legend using MacroElement
-        legend_html = '''
-        {% macro html(this, kwargs) %}
-        <div style="
-            position: fixed;
-            bottom: 50px;
-            left: 50px;
-            width: 160px;
-            background-color: #222;
-            color: white;
-            z-index: 9999;
-            font-size: 12px;
-            border: 1px solid #555;
-            padding: 8px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px #000;
-        ">
-            <b>Legend</b><br>
-            🔥 Wildfire<br>
-            🌊 Flood<br>
-            🌪️ Storm/Tornado<br>
-            🦠 Health/Outbreak<br>
-            ⚠️ Other
-        </div>
-        {% endmacro %}
-        '''
-        legend = MacroElement()
-        legend._template = Template(legend_html)
-        m.get_root().add_child(legend)
 
         st_folium(m, use_container_width=True, height=500)
 
