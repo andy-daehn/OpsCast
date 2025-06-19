@@ -73,7 +73,7 @@ if brief:
             <div style="font-size: 16px; line-height: 1.6; color: #dddddd;">
                 {brief['summary']}
             </div>
-        
+        </div>
         """,
         unsafe_allow_html=True
     )
