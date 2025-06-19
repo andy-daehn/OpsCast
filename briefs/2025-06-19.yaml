@@ -39,7 +39,7 @@ events:
     latitude: 44.7
     longitude: -121.2
 
-  - title: "Upper Applegate Fire
+  - title: "Upper Applegate Fire"
     region: "Jackson County, OR"
     type: "Wildfire"
     notes: "The Upper Applegate Fire is currently burning at 470 acres with 30% containment"
