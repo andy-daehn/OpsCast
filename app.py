@@ -163,7 +163,8 @@ if brief:
                 st.markdown("### 🔭 Collaboration Operations")
                 for item in brief['collabops']:
                     st.markdown(f"- [{item['title']}]({item['url']})")
-                    st.markdown(f"[{item['notes']}]")
+                    st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;↪️ {item['notes']}", unsafe_allow_html=True)
+
 
 
 
