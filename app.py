@@ -149,6 +149,14 @@ if brief:
 
         st_folium(m, use_container_width=True, height=500)
 
+        with right_col:
+            if brief.get('collabops'):
+                st.markdown("\n")
+                st.markdown("### 🔭 Collab Ops")
+                for item in brief['collabops']:
+                    st.markdown(f"- [{item['title']}]({item['url']})")
+
+
     with left_col:
 
         st.markdown("\n")
