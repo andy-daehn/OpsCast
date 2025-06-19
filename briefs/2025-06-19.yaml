@@ -58,14 +58,14 @@ related_news:
     url: "https://www.kdrv.com/video/upper-applegate-fire-burning-at-470-acres/video_91874375-fb83-5e7f-89af-fed8b7cc5323.html"
 
 collabops:
+  - notes: "Collaboration Operations."
   - title: "Conversa Corps"
-    notes: "Collaboration Operations."
     url: "https://conversacorps.org/"
+  - notes: "Collaboration for all things HADR."
   - title: "Humanitarian Data Exchange"
-    notes: "Collaboration for all things HADR."
     url: "https://data.humdata.org/"
+  - notes: "New flood mapping and monitoring platform."
   - title: "FloodMapp"
-    notes: "New flood mapping and monitoring platform."
     url: "https://www.floodmapp.com/"
  
 
