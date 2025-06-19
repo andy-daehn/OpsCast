@@ -4,8 +4,10 @@ import os
 from datetime import datetime
 import folium
 from streamlit_folium import st_folium
+from branca.element import MacroElement
+from jinja2 import Template
 
-# Set full width layout and dark theme and be cool
+# Set full width layout and dark theme
 st.set_page_config(layout="wide", page_title="OpsCast Brief", page_icon="🌍")
 
 # ---------- CONFIG ---------- #
@@ -22,19 +24,11 @@ def load_brief(date_str):
         return yaml.safe_load(f)
 
 # ---------- SIDEBAR ---------- #
-# Get all .yaml files from the briefs directory
 brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
 date_options = [f.replace(".yaml", "") for f in brief_files]
 
-# Get today's date
 today_str = datetime.today().strftime("%Y-%m-%d")
 
-
-# Re-read files after stub creation
-brief_files = sorted([f for f in os.listdir(BRIEFS_DIR) if f.endswith(".yaml")])
-date_options = [f.replace(".yaml", "") for f in brief_files]
-
-# Determine default date
 if DEFAULT_BRIEF and DEFAULT_BRIEF in brief_files:
     default_date = DEFAULT_BRIEF.replace(".yaml", "")
 elif today_str in date_options:
@@ -42,7 +36,6 @@ elif today_str in date_options:
 else:
     default_date = max(date_options)
 
-# Sidebar selection
 selected_date = st.sidebar.selectbox("Select Briefing Date", options=date_options, index=date_options.index(default_date))
 brief = load_brief(selected_date)
 
@@ -71,7 +64,6 @@ if brief:
     st.markdown(f"### {brief['headline']}")
     st.write(brief['summary'])
 
-    # Layout: left = incidents/audio/news, right = map + stats
     left_col, right_col = st.columns([7, 5])
 
     with right_col:
@@ -121,13 +113,23 @@ if brief:
         if lat_lon_pairs:
             m.fit_bounds(lat_lon_pairs)
 
-        # Updated legend to align with the map
+        # Add custom fixed-position legend using MacroElement
         legend_html = '''
-        <div style="position: absolute; 
-                    bottom: 10px; left: 10px; width: 160px; height: auto; 
-                    background-color: #222; color: white;
-                    z-index:9999; font-size:12px;
-                    border:1px solid #555; padding: 8px; border-radius: 5px;">
+        {% macro html(this, kwargs) %}
+        <div style="
+            position: fixed;
+            bottom: 50px;
+            left: 50px;
+            width: 160px;
+            background-color: #222;
+            color: white;
+            z-index: 9999;
+            font-size: 12px;
+            border: 1px solid #555;
+            padding: 8px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px #000;
+        ">
             <b>Legend</b><br>
             🔥 Wildfire<br>
             🌊 Flood<br>
@@ -135,8 +137,11 @@ if brief:
             🦠 Health/Outbreak<br>
             ⚠️ Other
         </div>
+        {% endmacro %}
         '''
-        m.get_root().html.add_child(folium.Element(legend_html))
+        legend = MacroElement()
+        legend._template = Template(legend_html)
+        m.get_root().add_child(legend)
 
         st_folium(m, use_container_width=True, height=500)
 
@@ -150,11 +155,6 @@ if brief:
                 st.write(event['notes'])
                 if event.get('link'):
                     st.markdown(f"[More Info]({event['link']})")
-
-        # if brief.get('podcast_link'):
-        #     st.markdown("\n")
-        #     st.markdown("### 🎙️ Listen to Today's CrisisCast")
-        #     st.audio(brief['podcast_link'])
 
         st.markdown("\n")
         st.markdown("### 📊 Key Stats")
