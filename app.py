@@ -82,7 +82,7 @@ if brief:
 
 
 
-    left_col, right_col = st.columns([7, 5])
+    left_col, right_col = st.columns([7, 5], gap="small")
 
     with right_col:
         if brief.get('related_news'):
