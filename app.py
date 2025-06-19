@@ -59,8 +59,6 @@ if brief:
     st.title(f"OpsCast Brief – {brief['date']}")
     st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources']) if brief['sources'] else 'None listed'}")
 
-    st.markdown(f"### {brief['headline']}")
-    st.write(brief['summary'])
 
     left_col, right_col = st.columns([7, 5])
 
@@ -130,6 +128,10 @@ if brief:
         st_folium(m, use_container_width=True, height=500)
 
     with left_col:
+
+        st.markdown(f"### {brief['headline']}")
+        st.write(brief['summary'])
+
         st.markdown("\n")
         st.markdown("### 🗂️ Top Incidents")
         for event in brief['events']:
