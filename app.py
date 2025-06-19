@@ -61,15 +61,23 @@ if brief:
 
     st.markdown(
         f"""
-        <div style="background-color: #1e1e1e; padding: 16px 20px; border-radius: 8px; margin-bottom: 20px;">
-            <h2 style="color: #f2f2f2; margin-top: 0; margin-bottom: 10px;">🚨 {brief['headline']}</h2>
-            <p style="font-size: 16px; line-height: 1.6; color: #ccc; margin: 0;">
+        <div style="background-color: #1f1f1f;
+                    border-left: 5px solid #d62728;
+                    padding: 16px 20px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    box-shadow: 0px 0px 6px rgba(0,0,0,0.4);">
+            <div style="font-size: 22px; font-weight: bold; color: #f8f8f8; margin-bottom: 10px;">
+                🚨 {brief['headline']}
+            </div>
+            <div style="font-size: 16px; line-height: 1.6; color: #dddddd;">
                 {brief['summary']}
-            </p>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
     )
+
 
 
 
