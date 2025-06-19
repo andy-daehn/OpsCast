@@ -60,15 +60,16 @@ if brief:
     st.caption(f"Last updated: {brief['updated']} | Sources: {', '.join(brief['sources']) if brief['sources'] else 'None listed'}")
 
     st.markdown(
-    f"""
-    <div style="background-color: #1e1e1e; padding: 16px 20px; border-radius: 8px; margin-bottom: 20px;">
-        <h2 style="color: #f2f2f2; margin-top: 0; margin-bottom: 10px;">🚨 {brief['headline']}</h2>
-        <p style="font-size: 16px; line-height: 1.6; color: #ccc; margin: 0;">
-            {brief['summary']}
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True)
+        f"""
+        <div style="background-color: #1e1e1e; padding: 16px 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h2 style="color: #f2f2f2; margin-top: 0; margin-bottom: 10px;">🚨 {brief['headline']}</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #ccc; margin: 0;">
+                {brief['summary']}
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 
